@@ -21,7 +21,9 @@ First of all, there is a server, this is you, you start the API on your computer
 
 **Server:** [JAVA](https://www.python.org/downloads/)
 
-**Builder:** [C#](https://learn.microsoft.com/tr-tr/dotnet/csharp/)## Setup
+**Builder:** [C#](https://learn.microsoft.com/tr-tr/dotnet/csharp/)
+
+## Setup
 
 Clone the project
 
