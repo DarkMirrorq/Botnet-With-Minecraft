@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sunucu Kayıt ve Ping</title>
+    <style>
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+    padding-top: 20px;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+h2 {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.ping-results, .server-status, .json-results {
+    width: 80%;
+    margin: 20px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.message.error {
+    background-color: #ffe6e6;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.message.success {
+    background-color: #e6ffe6;
+    color: #28a745;
+    border: 1px solid #28a745;
+}    </style>
+</head>
+<body>
+
+    <form action="/ping" method="post">
+        <label for="ping-url">Ping atılacak URL:</label>
+        <input type="text" id="ping-url" name="url" required />
+        <button type="submit">Ping At</button>
+    </form>
+
+    {% if online_count is defined %}
+        <table>
+            <tr>
+                <th>Online Sunucu Sayısı</th>
+                <th>Offline Sunucu Sayısı</th>
+            </tr>
+            <tr>
+                <td>{{ online_count }}</td>
+                <td>{{ offline_count }}</td>
+            </tr>
+        </table>
+    {% endif %}
+
+    {% if ping_results %}
+        <table>
+            <tr>
+                <th>Toplam İstek</th>
+                <th>Başarılı İstek</th>
+            </tr>
+            <tr>
+                <td>{{ total_requests }}</td>
+                <td>{{ total_success }}</td>
+            </tr>
+        </table>
+    {% endif %}
+
+    {% if request_history %}
+        <h2>Canlı İstekler</h2>
+        <table id="request-table">
+            <tr>
+                <th>Zaman</th>
+                <th>Sunucu URL</th>
+                <th>Hedef URL</th>
+                <th>Başarı Durumu</th>
+            </tr>
+            {% for req in request_history %}
+                <tr>
+                    <td>{{ req.time }}</td>
+                    <td>{{ req.server_url }}</td>
+                    <td>{{ req.url }}</td>
+                    <td>{{ "Başarılı" if req.success else "Başarısız" }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+</body>
+</html>
