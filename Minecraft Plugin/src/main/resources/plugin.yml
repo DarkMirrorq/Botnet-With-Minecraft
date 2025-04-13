@@ -1,0 +1,4 @@
+name: AktivitePlugin
+version: 1.0
+main: me.plugin.Main
+api-version: 1.20
