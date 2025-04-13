@@ -1,0 +1,16 @@
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\obj\Debug\net8.0-windows\Plugin_Derleyici.Form1.resources
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\obj\Debug\net8.0-windows\Plugin Derleyici.csproj.GenerateResource.cache
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\obj\Debug\net8.0-windows\Plugin Derleyici.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\obj\Debug\net8.0-windows\Plugin Derleyici.AssemblyInfoInputs.cache
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\obj\Debug\net8.0-windows\Plugin Derleyici.AssemblyInfo.cs
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\obj\Debug\net8.0-windows\Plugin Derleyici.csproj.CoreCompileInputs.cache
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\bin\Debug\net8.0-windows\Plugin Derleyici.exe
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\bin\Debug\net8.0-windows\Plugin Derleyici.deps.json
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\bin\Debug\net8.0-windows\Plugin Derleyici.runtimeconfig.json
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\bin\Debug\net8.0-windows\Plugin Derleyici.dll
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\bin\Debug\net8.0-windows\Plugin Derleyici.pdb
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\obj\Debug\net8.0-windows\Plugin Derleyici.dll
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\obj\Debug\net8.0-windows\refint\Plugin Derleyici.dll
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\obj\Debug\net8.0-windows\Plugin Derleyici.pdb
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\obj\Debug\net8.0-windows\Plugin Derleyici.genruntimeconfig.cache
+C:\Users\husey\Desktop\Plugin Derleyici\Plugin Derleyici\Plugin Derleyici\obj\Debug\net8.0-windows\ref\Plugin Derleyici.dll

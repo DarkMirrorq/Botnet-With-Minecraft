@@ -1,0 +1,7 @@
+C:\Users\husey\Desktop\Plugin Derleyici.pdb
+C:\Users\husey\Desktop\D3DCompiler_47_cor3.dll
+C:\Users\husey\Desktop\PenImc_cor3.dll
+C:\Users\husey\Desktop\PresentationNative_cor3.dll
+C:\Users\husey\Desktop\vcruntime140_cor3.dll
+C:\Users\husey\Desktop\wpfgfx_cor3.dll
+C:\Users\husey\Desktop\Plugin Derleyici.exe

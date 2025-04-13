@@ -1,0 +1,5 @@
+C:\Users\husey\Desktop\export\Plugin Derleyici.exe
+C:\Users\husey\Desktop\export\Plugin Derleyici.dll
+C:\Users\husey\Desktop\export\Plugin Derleyici.deps.json
+C:\Users\husey\Desktop\export\Plugin Derleyici.runtimeconfig.json
+C:\Users\husey\Desktop\export\Plugin Derleyici.pdb
