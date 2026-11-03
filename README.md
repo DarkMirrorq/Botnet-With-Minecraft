@@ -1,83 +1,201 @@
+# 🌐 Botnet-With-Minecraft (PoC)
 
-
-
-# Botnet-With-Minecraft
-
-This project is completely as you heard in the title, I made a plugin that turns minecraft servers into botnets. I used python and java in this project and additionally c# for the compiler application but downloading the compiler application is not mandatory.
-
+<p align="center">
+  <img src="https://img.shields.io/badge/Language-Java%2021-orange?style=for-the-badge&logo=openjdk" alt="Java 21" />
+  <img src="https://img.shields.io/badge/Backend-Python%20Flask-blue?style=for-the-badge&logo=flask" alt="Flask" />
+  <img src="https://img.shields.io/badge/GUI%20Tool-C%23%20%2F%20.NET-purple?style=for-the-badge&logo=dotnet" alt=".NET" />
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT License" />
+</p>
 
 ---
-# **Disclaimer ⚠️**
-- **This software was developed for personal training and sandbox testing. The developer of the software is not responsible in any way for its misuse. By downloading or using this program, you acknowledge that you are solely responsible for any consequences that may result from the use of this program.**
+
+## 📌 Language / Dil Seçimi
+- [English](#-english)
+- [Türkçe](#-türkçe)
+
 ---
 
+# 🇬🇧 English
 
-## How does it work?
+## 📖 Overview
+**Botnet-With-Minecraft** is an experimental educational **Proof-of-Concept (PoC)** demonstrating how distributed Minecraft game servers can act as coordinated network nodes via custom game plugins. 
 
-First of all, there is a server, this is you, you start the API on your computer and it starts listening. A minecraft server sends a request to the API it opens with the register endpoint and writes the minecraft server IP to register.txt. Then, it starts a server on port 8080 on the minecraft server and starts listening. There are 2 commands that can come from the server, one is ping and the other is the online command. Although the ping command is our main event, if we think that this plugin has 10,000 people, a small ddos ​​attack can be made. Also, when the other command is reached to the online endpoint, a request is sent to the server and if it returns 200, it is marked as online. You can use the dashboard made with flask+html to send a ping command and see online servers.
-## Technologies Used
+The project highlights the critical importance of supply-chain security and plugin auditing in gaming ecosystems, showing how an innocent-looking Bukkit/Spigot plugin can expose internal HTTP endpoints and communicate with a central command server.
 
-**API:** [Python](https://www.python.org/downloads/)
+> [!WARNING]
+> **DISCLAIMER & LEGAL NOTICE:**
+> This repository was developed strictly for **educational, security research, and personal laboratory testing** purposes. The author does not condone and is not responsible for any malicious use or unauthorized deployment. Do not run or distribute this code across networks without explicit written permission.
 
-**Server:** [JAVA](https://www.python.org/downloads/)
+---
 
-**Builder:** [C#](https://learn.microsoft.com/tr-tr/dotnet/csharp/)
+## 🏗️ Architecture
 
-## Setup
+```
+                      +-----------------------------+
+                      |   Flask Admin Dashboard     |
+                      |   (Command & Monitor API)   |
+                      +--------------+--------------+
+                                     |
+               +---------------------+---------------------+
+               | Broadcast Target                          | Broadcast Target
+               v                                           v
+    +----------------------+                    +----------------------+
+    |  Minecraft Server A  |                    |  Minecraft Server B  |
+    |  - Spark HTTP (8080) |                    |  - Spark HTTP (8080) |
+    |  - Async HTTP Client |                    |  - Async HTTP Client |
+    +----------+-----------+                    +----------+-----------+
+               |                                           |
+               +---------------------+---------------------+
+                                     | Concurrent HTTP Pings
+                                     v
+                        +-------------------------+
+                        |       Target Host       |
+                        +-------------------------+
+```
 
-Clone the project
+### Components
+1. **Admin Server (`Admin Server/`):**
+   - Built with **Python / Flask**.
+   - Handles node registration (`/register`), status monitoring (`/online`), and task dispatching (`/ping`).
+   - Provides a real-time web dashboard for node management.
+2. **Minecraft Plugin (`Minecraft Plugin/`):**
+   - Built with **Java 21** using Paper/Spigot APIs and **Spark Java**.
+   - Spawns an internal HTTP micro-server on port `8080`.
+   - Listens for `/ping?url=` triggers and performs non-blocking asynchronous HTTP requests.
+3. **Plugin Compiler (`Plugin Compiler/`):**
+   - Standalone **C# / .NET WinForms** utility.
+   - Automates `.env` injection and Maven build orchestration for non-technical users.
 
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- **Python 3.10+**
+- **Java Development Kit (JDK) 21**
+- **Apache Maven 3.9+**
+- **Static IP** or port forwarding service (e.g., [ngrok](https://ngrok.com/))
+
+---
+
+### 2. Admin Server Setup
 ```bash
+# Clone the repository
 git clone https://github.com/DarkMirrorq/Botnet-With-Minecraft.git
-```
-Enter Admin Server Directory Then Enter Comand
-```bash
+cd Botnet-With-Minecraft/Admin\ Server
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Start the dashboard
+python app.py
 ```
+The dashboard will be accessible at `http://localhost:5000`.
 
-Firstly make sure you have static ip if you don't have use [ngrok](https://ngrok.com/). If you are goint use ngrok make sure you set server for static domain [ngrok domains](https://dashboard.ngrok.com/domains). After these steps run app.py it will run dashboard on http://localhost:5000 u can manage things in this.
+---
 
+### 3. Minecraft Plugin Build & Configuration
 
-The server configuration has done. Next step is plugin configuration.
+#### Method A: Manual Compilation (Maven)
+1. Navigate to the plugin directory:
+   ```bash
+   cd "Minecraft Plugin"
+   ```
+2. Edit `src/main/resources/.env`:
+   ```env
+   API_URL=http://<YOUR_ADMIN_IP_OR_NGROK_DOMAIN>:5000
+   ```
+3. (Optional) In `src/main/java/me/plugin/Main.java`, toggle `debugMode` (`true` for sandbox logging, `false` for silent operation).
+4. Compile the JAR file:
+   ```bash
+   mvn clean install
+   ```
+5. Retrieve the output JAR from `target/aktiviteplugin-1.0-SNAPSHOT.jar` and place it in your Minecraft server's `plugins/` directory.
 
-In this case there are 2 ways if you are not advanced user use the compiler in the release section you just download enter server url and it's done.
+#### Method B: Automated GUI Compiler (.NET)
+1. Open `Plugin Compiler/Plugin Derleyici.sln` in **Visual Studio**.
+2. Build or publish the desktop utility.
+3. Place `maven` and `source_code` in the application root, enter your API URL into the GUI, and click **Derle (Compile)**.
 
-If you are advanced user this path shows you how to compile the plugin.
+---
 
+# 🇹🇷 Türkçe
 
-Install [Apache Maven](https://maven.apache.org/download.cgi) then add bin directory to path. Then download [Java 21](https://www.oracle.com/tr/java/technologies/downloads/) make sure Java home is set. 
+## 📖 Genel Bakış
+**Botnet-With-Minecraft**, üçüncü parti oyun eklentilerinin arka planda dağıtık bir ağ düğümü (node) gibi nasıl çalışabileceğini inceleyen deneysel bir **Proof-of-Concept (PoC / Konsept Kanıtı)** projesidir.
 
-After these reboot your computer. Enter cmd this comand
+Bu proje, oyun sunucusu ekosistemlerindeki tedarik zinciri (supply-chain) güvenlik açıklarına ve güvenilmeyen eklentilerin doğurabileceği risklere dikkat çekmek amacıyla geliştirilmiştir. Masum görünen bir Bukkit/Spigot eklentisinin nasıl bağımsız bir HTTP dinleyicisi açabileceğini ve merkezi bir API ile koordine olabileceğini gösterir.
 
+> [!WARNING]
+> **YASAL UYARI VE SORUMLULUK REDDİ:**
+> Bu yazılım yalnızca **eğitim, siber güvenlik araştırmaları ve izole laboratuvar ortamlarında test yapılmak üzere** geliştirilmiştir. Geliştirici, yazılımın yetkisiz, izinsiz veya kötüye kullanımından hiçbir şekilde sorumlu tutulamaz. Yazılımı yalnızca izin aldığınız kendi sunucularınızda test ediniz.
+
+---
+
+## 🏗️ Sistem Mimarisi
+
+- **Admin Server (Yönetim Paneli):** Flask ile hazırlanmış merkezi yönetim konsolu.
+  - `/register`: Yeni sunucuların IP ve port (8080) bilgilerini kaydeder.
+  - `/online`: Düğümlerin anlık erişilebilirliğini doğrular.
+  - `/ping`: Online durumdaki tüm düğümlere eşzamanlı HTTP istek komutu iletir.
+- **Minecraft Plugin (İstemci Eklenti):** Java 21 ve Spark framework kullanılarak kodlanmıştır.
+  - Sunucu açıldığında Admin API'ye kendi IP'sini bildirir.
+  - 8080 portunda bir HTTP micro-server başlatır.
+  - Panelden gelen hedef URL isteklerini arka planda asenkron (`HttpClient`) olarak hedefe gönderir.
+- **Plugin Compiler (Derleyici Arayüzü):** C# ile yazılmış masaüstü aracı.
+  - Manuel Maven komutlarıyla uğraşmak istemeyen kullanıcılar için `.env` dosyasındaki API URL'sini güncelleyip otomatik derleme yapar.
+
+---
+
+## 🛠️ Kurulum ve Çalıştırma
+
+### 1. Gereksinimler
+- **Python 3.10+**
+- **Java JDK 21**
+- **Apache Maven 3.9+**
+- Sabit IP adresi veya tünelleme aracı (örn: [ngrok](https://ngrok.com/))
+
+---
+
+### 2. Admin Server'ı Başlatma
 ```bash
-mvn --version
+# Depoyu klonlayın
+git clone https://github.com/DarkMirrorq/Botnet-With-Minecraft.git
+cd Botnet-With-Minecraft/Admin\ Server
+
+# Gereksinimleri yükleyin
+pip install -r requirements.txt
+
+# Paneli çalıştırın
+python app.py
 ```
-You  should see something like this
-```bash
-Apache Maven 3.9.9 (8e8579a9e76f7d015ee5ec7bfcdc97d260186937)
-Maven home: C:\apache-maven-3.9.9
-Java version: 21.0.6, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jdk-21
-Default locale: tr_TR, platform encoding: UTF-8
-OS name: "windows 11", version: "10.0", arch: "amd64", family: "windows"
-```
-After that go to **src\main\resources\.env** file and change the api url to your static ip or ngrok domain
+Panel varsayılan olarak `http://localhost:5000` adresinde çalışacaktır.
 
-After you set edit Main.java in **src\main\java\me\plugin** on line 18 there is a variable called debugMode if you want logs on server log for testing you can leave this true. But if you want use in real life switch to false. 
+---
 
-When you done setup switch to main directory of plugin then enter the comand
- 
-```bash
-mvn clean install
-```
-After some time you will see **BUILD SUCCES** message. The plugin will be in target directory **Minecraft Plugin\target** it will be named as **aktiviteplugin-1.0-SNAPSHOT.jar**
+### 3. Eklentiyi Derleme ve Yapılandırma
 
-Now you can distribute this to anywhere when server started it will register ip to api den it's part of botnet. Enjoy!
+#### Yöntem 1: Maven ile Manuel Derleme
+1. Eklenti dizinine geçin:
+   ```bash
+   cd "Minecraft Plugin"
+   ```
+2. `src/main/resources/.env` dosyasını açıp panel adresinizi yazın:
+   ```env
+   API_URL=http://<IP_VEYA_NGROK_ADRESINIZ>:5000
+   ```
+3. Test loglarını görmek veya kapatmak isterseniz `Main.java` içerisindeki `debugMode` değerini (`true` / `false`) ayarlayın.
+4. Eklentiyi paketleyin:
+   ```bash
+   mvn clean install
+   ```
+5. Oluşan `target/aktiviteplugin-1.0-SNAPSHOT.jar` dosyasını Minecraft sunucunuzun `plugins/` klasörüne atıp sunucuyu başlatın.
 
-If you wish you can compile the plugin compiler by yourself Downlaod [Visual Studio](https://visualstudio.microsoft.com) then download **.NET Desktop Developement** Pack. After that open the **.sln** file in **Plugin Compiler** folder u can use in visual studio but if you want you want to export as exe follow these steps.
+#### Yöntem 2: C# Derleyici Aracı ile
+1. `Plugin Compiler/Plugin Derleyici.sln` projesini **Visual Studio** ile açın ve Publish edin.
+2. Uygulama arayüzünden Admin Server adresinizi girerek tek tıkla JAR çıktısı alın.
 
-Right click the label called **Plugin Derleyici** on rigt column next to boxed c# logo. Then click publish select folder as publishing location after click agaşn to folder. Then choose a export folder from your computer then click end. After tab closed click show all setting then change the distribution option to in itself then select target runtime to your operating system hit safe the hit publish. You will wait 10-20 seconds acording to your computer when build is done u can use compiler. Before runnig make sure maven and plugşn souurce code is in apps root directory maven should named as maven and source code as source_code. After this you completed the compiler.
+---
 
-
-If you have any problem or any question you can create a issue ticket. 
-
-
+## 📄 Lisans
+Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır.
